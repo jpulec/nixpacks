@@ -26,10 +26,10 @@ impl Provider for ElixirProvider {
     fn get_build_plan(&self, app: &App, env: &Environment) -> Result<Option<BuildPlan>> {
         let mut plan = BuildPlan::default();
 
-        plan.add_variables(EnvironmentVariables::from([(
-            "MIX_ENV".to_string(),
-            "prod".to_string(),
-        )]));
+        plan.add_variables(EnvironmentVariables::from([
+            ("MIX_ENV".to_string(), "prod".to_string()),
+            ("LANG".to_string(), "en_US.UTF-8".to_string()),
+        ]));
 
         let elixir_pkg = ElixirProvider::get_nix_elixir_package(app, env)?;
         let setup_phase = Phase::setup(Some(vec![elixir_pkg]));
@@ -110,10 +110,11 @@ impl ElixirProvider {
 
         // Match major and minor versions
         match parsed_version {
-            ("1", "9") => Ok(Pkg::new("elixir_1_9")),
             ("1", "10") => Ok(Pkg::new("elixir_1_10")),
             ("1", "11") => Ok(Pkg::new("elixir_1_11")),
             ("1", "12") => Ok(Pkg::new("elixir_1_12")),
+            ("1", "13") => Ok(Pkg::new("elixir")),
+            ("1", "14") => Ok(Pkg::new("elixir_1_14")),
             _ => Ok(Pkg::new(DEFAULT_ELIXIR_PKG_NAME)),
         }
     }
