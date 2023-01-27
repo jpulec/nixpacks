@@ -6,6 +6,7 @@ expression: plan
   "providers": [],
   "buildImage": "[build_image]",
   "variables": {
+    "LANG": "en_US.UTF-8",
     "MIX_ENV": "prod",
     "NIXPACKS_METADATA": "elixir"
   },
@@ -34,7 +35,7 @@ expression: plan
     "setup": {
       "name": "setup",
       "nixPkgs": [
-        "elixir_1_12"
+        "elixir"
       ],
       "nixOverlays": [],
       "nixpkgsArchive": "[archive]"
